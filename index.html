@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="id"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260922-23-bc19096","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YACgEZulLoA,0","Arial Narrow":"YAGyDvJ_4Ts,0","Arial Rounded MT Bold":"YAFcfoaHu-s,0","Arial":"YAGyDvJ_4Ts,0","Avenir Next":"YAFcfmNq6UY,0","Baloo 2":"YADK30bC6HQ,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Broken Glyph":"YADZ-exUkv0,0","Canva Sans":"YAFdJjTk5UU,1","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAFcfvtOAUY,1","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","Courier Prime":"YAD1aFjegN8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAFdJpU7Kkk,0","Georgia":"YAGzXkO0pEM,0","Ghost Mono":"YAHQutsX00Q,0","Hanken Grotesk":"YAFcfhwp99E,0","Helvetica Neue":"YAFcf6CtJfI,0","Helvetica":"YAFcf6CtJfI,0","IBM Plex Mono":"YAFdJkmvhGI,0","Impact":"YAFcfnjI7Vk,0","Instrument Serif":"YAHFeOnZNEk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YADK3zbC6RM,0","JetBrains Mono":"YAFdJksXcAk,0","Josefin Sans":"YAFdJjvw9Ps,0","Lato":"YAFdJuFCnaw,0","Libre Baskerville":"YACgEUFdPdA,0","Lobster":"YAD8SnSjSFI,0","Lora":"YACgEXvxf8Q,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YAFdtQi73Xs,0","Nunito":"YAFdJoNRMmU,1","Oleo Script":"YACgEQQ14jI,0","Oswald":"YACgEQY10lw,0","Pacifico":"YADLjORQ1u4,0","Phantom Sans":"YAFdJvgJ5TU,0","Playfair Display":"YAFdJhem5V8,1","Plus Jakarta Sans":"YAGvf3_u0_Q,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YAFdJpYtCxE,1","Raleway":"YAFdJhmxbVQ,1","Roboto Slab":"YAFdJswIKAg,0","Rockwell":"YAFcfyVZnN0,0","Rye":"YACgEdQP21k,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Source Serif 4":"YACgEfdj394,0","Space Grotesk":"YADZ-dYEmhg,0","Space Mono":"YADW1-vpsoc,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Trebuchet MS":"YAFcfrglpVA,0","UV Display":"YAEdVfSSpYo,0","UV Sans":"YAFdJvgJ5TU,0","Ubuntu":"YACgERDU--Q,0","Verdana":"YAGzXTctYtQ,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YAD1aFjegN8,0","ui-sans-serif":"YACkoD1yZN0,0"}}');</script><script src="/_sdk/83d6dfdadcd4750a.telemetry_sdk.js" integrity="sha512-XS4Dvzp6vbagZS9vFErihvr8aO3S0tH78KWUefn06fmL4WYqryBtZj/IOLITYj7dFA4gPVvPg1W/JB1DK3uLNQ=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Labirin Pernapasan</title>
+  <style>
+  :root { --bg: #031b4e; --text: #f3fbff; --primary: #0879c9; --accent: #55dcff; --danger: #ff5b9d; --success: #70f5d0; --warning: #ffe66d; }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
+  body { background: radial-gradient(circle at 50% 35%, #0b75bd 0%, #04366f 42%, #03143f 100%); color: var(--text); overflow: hidden; width: 100vw; height: calc(100 * min(var(--vh, 1vh), 1vh)); display: flex; flex-direction: column; }
+  
+  .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; align-items: center; justify-content: center; background: rgba(11, 19, 43, 0.95); z-index: 100; text-align: center; padding: 20px; }
+  .screen.active { display: flex; }
+  #screen-splash { gap: clamp(6px, 1.2vw, 16px); padding: clamp(12px, 2.5vw, 28px); overflow: hidden; justify-content: space-evenly; }
+  h1 { font-size: clamp(2rem, 5vw, 4rem); color: var(--accent); text-shadow: 0 0 10px var(--accent); margin-bottom: 10px; }
+  h2 { font-size: clamp(1.2rem, 3vw, 2rem); margin-bottom: 20px; color: var(--warning); }
+  p { font-size: 1.2rem; margin-bottom: 15px; }
+  #screen-splash h1 { font-size: clamp(2.4rem, 6.2vw, 4.6rem); line-height: 1.05; margin-bottom: clamp(6px, 1.2vh, 14px); }
+  #screen-splash h2 { font-size: clamp(1.25rem, 3.4vw, 2rem); line-height: 1.15; margin-bottom: clamp(8px, 1.5vh, 18px); }
+  #screen-splash p { font-size: clamp(0.9rem, 2.1vw, 1.3rem); line-height: 1.2; margin-bottom: clamp(2px, 0.6vw, 8px); max-width: min(90vw, 900px); }
+  .author { font-size: clamp(0.72rem, 1.5vw, 1rem); color: #aaa; margin-top: clamp(2px, 0.5vw, 8px); line-height: 1.15; }
+  #screen-menu { gap: clamp(14px, 2.5vh, 28px); padding: clamp(24px, 5vw, 64px); }
+  #screen-menu h1 { font-size: clamp(3rem, 8vw, 6.5rem); margin-bottom: clamp(10px, 2vh, 24px); }
+  #screen-menu > .canva-button { width: min(92vw, 560px); min-height: clamp(64px, 9vh, 96px); margin: 0; padding: 16px 30px; font-size: clamp(1.35rem, 3vw, 2rem); border-radius: 14px; }
+  #screen-menu .menu-actions { margin-top: clamp(8px, 1.5vh, 18px); gap: 16px; }
+  #screen-menu .menu-actions .icon-btn { width: clamp(52px, 8vw, 72px); height: clamp(52px, 8vw, 72px); font-size: clamp(1.5rem, 3vw, 2rem); }
+  
+  button { background: var(--primary); color: white; border: 2px solid var(--accent); padding: 12px 24px; font-size: 1.2rem; border-radius: 8px; cursor: pointer; transition: 0.2s; margin: 10px; box-shadow: 0 0 10px rgba(91, 192, 190, 0.3); }
+  #screen-splash [data-template-id="splash-btn"] { padding: clamp(10px, 1.3vw, 18px) clamp(24px, 3.5vw, 46px); border-radius: 12px; font-size: clamp(1rem, 2.2vw, 1.6rem); margin: 0; animation: blink-start 1.4s ease-in-out infinite; }
+  @keyframes blink-start { 0%, 100% { opacity: 1; box-shadow: 0 0 10px rgba(91, 192, 190, 0.3); } 50% { opacity: 0.62; box-shadow: 0 0 24px rgba(91, 192, 190, 0.9); } }
+  @media (prefers-reduced-motion: reduce) { #screen-splash [data-template-id="splash-btn"] { animation: none; } }
+  button:hover { background: var(--accent); color: var(--bg); box-shadow: 0 0 20px var(--accent); transform: scale(1.05); }
+  
+  #game-wrapper { display: flex; flex: 1; flex-wrap: wrap; width: 100%; height: 100%; padding: 10px; gap: 10px; }
+  .player-container { flex: 1; min-width: 45%; min-height: 45%; position: relative; border: 3px solid #4bdcff; border-radius: 22px; background: radial-gradient(circle at 50% 35%, #087fc7, #021a4d 78%); box-shadow: inset 0 0 28px rgba(83,220,255,.7), 0 0 22px rgba(38,194,255,.65); overflow: hidden; display: flex; flex-direction: column; }
+  canvas { display: block; width: 100%; height: 100%; object-fit: contain; }
+  
+  .hud { position: absolute; top: 0; left: 0; width: 100%; padding: 10px 14px; display: flex; justify-content: space-between; background: linear-gradient(90deg, rgba(2,35,92,.92), rgba(8,125,196,.78), rgba(2,35,92,.92)); border-bottom: 2px solid #5de5ff; box-shadow: 0 0 14px rgba(74,220,255,.7); z-index: 10; font-weight: bold; font-size: clamp(0.8rem, 2vw, 1.2rem); color: white; pointer-events: none; }
+  .hud-stats { display: flex; gap: 15px; }
+  .combo-text { color: var(--warning); font-style: italic; display: none; }
+  .combo-text.active { display: inline-block; animation: pulse 0.5s infinite alternate; }
+  @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.2); } }
+  
+  .q-modal { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 50; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+  .q-modal.active { display: flex; }
+  .q-box { background: linear-gradient(145deg, #087fc7, #063b83); padding: 20px; border-radius: 22px; border: 3px solid #63e8ff; box-shadow: 0 0 30px rgba(69,220,255,.8); max-width: 600px; width: 100%; }
+  .q-text { font-size: 1.3rem; margin-bottom: 20px; line-height: 1.4; }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .opt-btn { background: var(--bg); border: 2px solid var(--accent); color: white; padding: 15px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; transition: 0.2s; }
+  .opt-btn:hover { background: var(--accent); color: var(--bg); }
+  .q-feedback { margin-top: 15px; font-size: 1.2rem; font-weight: bold; display: none; padding: 10px; border-radius: 5px; }
+  
+  #controls { position: absolute; bottom: 10px; width: 100%; display: none; justify-content: space-between; padding: 0 20px; z-index: 20; pointer-events: none; }
+  .dpad { display: grid; grid-template-columns: repeat(3, 50px); grid-template-rows: repeat(3, 50px); gap: 5px; pointer-events: auto; }
+  .dbtn { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.5); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+  .dbtn:active { background: rgba(255,255,255,0.5); }
+  .up { grid-column: 2; grid-row: 1; } .left { grid-column: 1; grid-row: 2; } .right { grid-column: 3; grid-row: 2; } .down { grid-column: 2; grid-row: 3; }
+  
+  .top-bar { position: absolute; top: 10px; right: 10px; z-index: 100; display: flex; gap: 10px; }
+  .menu-actions { display: flex; gap: 10px; margin-top: 12px; }
+  .speed-options { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 0 8px; }
+  .speed-options .speed-btn { margin: 0; padding: 10px 14px; font-size: 1rem; }
+  .speed-btn.selected { background: var(--accent) !important; color: var(--bg) !important; border: 3px solid #ffffff; box-shadow: 0 0 0 3px var(--accent), 0 0 24px 8px rgba(85,220,255,.85); font-weight: 800; transform: scale(1.06); position: relative; z-index: 1; }
+  .icon-btn { background: var(--primary); border: none; color: white; width: 40px; height: 40px; border-radius: 5px; font-size: 1.2rem; cursor: pointer; margin: 0; }
+  #player-names-form { width: min(92vw, 520px); display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+  .name-field { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+  .name-field label { color: var(--warning); font-weight: 700; }
+  .name-field input { width: 100%; padding: 14px 16px; border: 2px solid var(--accent); border-radius: 10px; background: rgba(3,27,78,.8); color: white; font-size: 1.1rem; outline: none; }
+  .name-field input:focus { box-shadow: 0 0 0 3px rgba(85,220,255,.35); }
+  
+  @media (max-aspect-ratio: 1/1) {
+    .options { grid-template-columns: 1fr; }
+    #game-wrapper { flex-direction: column; }
+    .dpad { grid-template-columns: repeat(3, 45px); grid-template-rows: repeat(3, 45px); }
+  }
+</style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/8de366929c5f3b48.data_sdk.js" type="text/javascript" integrity="sha512-TyQ8k8cZj66xe/aENmn6RyZpdOFZXbAo5+KBG3PeFM+Q4qMTHU8xAqmq4ADClNfPrstgQYV6OzZHwLTnElzB2g=="></script>
+  <script src="/_sdk/94916171342f3214.editing_sdk.js" type="text/javascript" integrity="sha512-iD6yxTksfey/7N3Df0f52UtQsuvEgQYXQKioLwfyua/wCe7br8wUuc/pDNnGdXhJ/6CJKJ9sPcWHBNlAjOMhEQ=="></script>
+  <script src="/_sdk/765e1fea0cec97ce.resizing_sdk.js" type="text/javascript" integrity="sha512-IRTJnqww0+HQ5V/LlWEQrlD5SrYHaVvaeVoNe8HYQXoaguzUGheSd9+n9s6WOgaTcEH0g37DuINHZ9aqfzWjlw=="></script>
+ </head>
+ <body data-template-id="__page-root" style="background: radial-gradient(rgb(11, 117, 189), rgb(4, 54, 111));">
+  <div class="top-bar">
+   <button class="icon-btn" id="btn-pause" aria-label="Jeda">⏸</button> <button class="icon-btn" id="btn-settings" aria-label="Pengaturan">⚙</button> <button class="icon-btn" id="btn-fs" aria-label="Layar penuh">⛶</button>
+  </div>
+  <div id="screen-settings" class="screen" aria-label="Pengaturan permainan">
+   <h2 data-template-id="settings-title" class="canva-text" style="color: rgb(255, 202, 58); font-weight: 400; font-style: normal; font-size: 24px;">PENGATURAN</h2><button data-template-id="settings-sound-btn" id="btn-sound" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255);">🔊 SUARA: ON</button> <button data-template-id="settings-fullscreen-btn" id="btn-settings-fs" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">⛶ LAYAR PENUH</button> <button data-template-id="settings-save-btn" id="btn-settings-save" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">SIMPAN</button> <button data-template-id="settings-close-btn" id="btn-settings-close" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">TUTUP</button>
+  </div>
+  <div id="screen-splash" class="screen active"><img data-template-id="splash-logo" class="canva-image" loading="lazy" style="width:min(30vw, 170px); height:auto; max-height:14%; object-fit:contain; margin-bottom:clamp(2px, 0.6vw, 8px);" src="https://imgur.com/daVtIGx.png" alt="Logo Yayasan Pesantren Islam Al Azhar"><img data-template-id="splash-banner" class="canva-image" loading="lazy" style="width:min(90vw, 980px); height:auto; max-height:42%; object-fit:contain; margin-bottom:clamp(2px, 0.6vw, 8px);" src="https://imgur.com/2SBXqWV.png" alt="Ilustrasi labirin bertema sistem pernapasan dengan paru-paru, oksigen, dan karakter edukatif">
+   <p data-template-id="splash-desc" class="canva-text" style="color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 22px;">Jelajahi Labirin dan Kuasai Sistem Pernapasan Manusia!</p><button data-template-id="splash-btn" class="canva-button" onclick="showMenu()" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 28px;">▶ MULAI BERMAIN</button> <button data-template-id="splash-music-btn" id="btn-splash-music" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">🔊 MUSIK: ON</button>
+   <div data-template-id="splash-author" class="author canva-text" style="color: rgb(170, 170, 170); font-weight: 400; font-style: normal; font-size: 18px;">Dibuat oleh: Abdur Rahim, S.Pd.I
+Guru SDI Al Azhar 23 Jatikramat</div>
+  </div>
+  <div id="screen-menu" class="screen">
+   <h1 data-template-id="menu-title" class="canva-text" style="color: rgb(91, 192, 190); font-weight: 400; font-style: normal; font-size: 40px;">PILIH MODE</h1><button data-template-id="menu-solo-btn" class="canva-button" onclick="openPlayerNames(1)" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 27px;">👤 SOLO (1 Pemain/1 Tim)</button> <button data-template-id="menu-duel-btn" class="canva-button" onclick="openPlayerNames(2)" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 27px;">👥 DUEL (2 Pemain/2 Tim)</button> <button data-template-id="menu-help-btn" class="canva-button" onclick="document.getElementById('screen-tutorial').classList.add('active')" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 27px;">❓ Petunjuk</button> <button data-template-id="menu-home-btn" class="canva-button" onclick="showSplash()" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 27px;">🏠 KEMBALI KE AWAL</button>
+   <div class="menu-actions" aria-label="Kontrol permainan"><button data-template-id="menu-settings-btn" class="icon-btn canva-button" type="button" aria-label="Pengaturan" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">⚙</button><button data-template-id="menu-sound-btn" class="icon-btn canva-button" id="btn-menu-sound" type="button" aria-label="Suara" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255);">🔊</button><button data-template-id="menu-fullscreen-btn" class="icon-btn canva-button" id="btn-menu-fs" type="button" aria-label="Layar penuh" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">⛶</button>
+   </div>
+  </div>
+  <div id="screen-tutorial" class="screen">
+   <h2 data-template-id="tutorial-title" class="canva-text" style="color: rgb(255, 202, 58); font-weight: 400; font-style: normal; font-size: 24px;">PETUNJUK BERMAIN</h2>
+   <p data-template-id="tutorial-rules" class="canva-text" style="color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">🔵 Kumpulkan Molekul Oksigen (O₂)
+👾 Hindari polusi &amp; virus
+🫁 Ambil Lung Power untuk mengejar musuh
+❓ Jawab pertanyaan di Gerbang (Question Gate)
+🌀 Capai portal akhir (Exit Portal) jika syarat O₂ terpenuhi!</p>
+   <p data-template-id="tutorial-controls" class="canva-text" style="color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">Solo: Panah / WASD / Swipe / D-Pad
+Duel: P1 (WASD), P2 (Panah)</p><button data-template-id="tutorial-btn" class="canva-button" onclick="this.parentElement.classList.remove('active')" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">MENGERTI</button>
+  </div>
+  <div id="screen-player-names" class="screen" aria-label="Nama pemain atau tim">
+   <h2 data-template-id="names-title" class="canva-text" style="color: rgb(255, 202, 58); font-weight: 400; font-style: normal; font-size: 28px;">NAMA PEMAIN / TIM</h2>
+   <p data-template-id="names-help" class="canva-text" style="color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">Masukkan nama sebelum memulai misi.</p>
+   <form id="player-names-form">
+    <div id="name-field-1" class="name-field">
+     <label data-template-id="name-label-1" class="canva-text" for="player-name-1" style="color: rgb(255, 202, 58); font-weight: 400; font-style: normal; font-size: 16px;">Nama pemain atau tim</label><input data-template-id="name-input-1" class="canva-input" id="player-name-1" type="text" maxlength="24" autocomplete="off" required="" placeholder="Contoh: Tim Oksigen" style="color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">
+    </div>
+    <div id="name-field-2" class="name-field" hidden="">
+     <label data-template-id="name-label-2" class="canva-text" for="player-name-2" style="color: rgb(255, 202, 58); font-weight: 400; font-style: normal; font-size: 16px;">Nama pemain atau tim 2</label><input data-template-id="name-input-2" class="canva-input" id="player-name-2" type="text" maxlength="24" autocomplete="off" placeholder="Contoh: Tim Paru-paru" style="color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">
+    </div><button data-template-id="names-start-btn" class="canva-button" type="submit" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">MULAI MISI</button> <button data-template-id="names-back-btn" class="canva-button" id="names-back-btn" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">KEMBALI</button>
+   </form>
+  </div>
+  <div id="screen-gameover" class="screen">
+   <h1 id="go-title" data-template-id="go-title" class="canva-text" style="color: rgb(91, 192, 190); font-weight: 400; font-style: normal; font-size: 32px;">MISSION FAILED</h1>
+   <p id="go-msg" data-template-id="go-msg" class="canva-text" style="color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">Jangan menyerah! Yuk coba lagi dan lindungi sistem pernapasan!</p>
+   <div id="go-stats" style="margin-bottom:20px; font-size:1.2rem; text-align:left; background:rgba(0,0,0,0.5); padding:20px; border-radius:10px;"></div><button data-template-id="go-retry-btn" class="canva-button" onclick="startGame(currentMode)" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">↻ COBA LAGI</button> <button data-template-id="go-menu-btn" class="canva-button" onclick="showMenu()" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">🏠 MENU UTAMA</button>
+  </div>
+  <div id="game-wrapper"></div>
+  <div id="controls">
+   <div class="dpad" id="dpad1"></div>
+  </div>
+  <script>
+const CONFIG = {
+  tileSize: 40, fps: 60,
+  playerSpeed: 4, enemySpeed: 2, chaseSpeed: 2, fleeSpeed: 1,
+  lives: 3, reqO2Percent: 0.8, powerDuration: 8000,
+  colors: {
+    wall: '#3a506b', o2: '#5bc0be', player: '#00bbf9', enemy: ['#7f7f7f', '#a68a64', '#595959', '#9b5de5'],
+    gate: '#f15bb5', portal: '#00f5d4', power: '#fee440'
+  }
+};
+
+const QUESTION_BANK = [
+  { q: "Apa fungsi utama sistem pernapasan pada manusia?", o: ["Mengedarkan darah", "Mencerna makanan", "Menghirup oksigen dan mengeluarkan karbon dioksida", "Menyaring racun darah"], c: 2, exp: "Sistem pernapasan berfungsi untuk pertukaran gas O2 dan CO2." },
+  { q: "Rambut halus di dalam hidung berfungsi untuk...", o: ["Menghangatkan udara", "Menyaring debu dan kotoran", "Mendeteksi bau", "Menghasilkan lendir"], c: 1, exp: "Rambut hidung menyaring kotoran agar tidak masuk ke paru-paru." },
+  { q: "Organ yang merupakan persimpangan antara saluran pernapasan dan saluran pencernaan adalah...", o: ["Laring", "Faring", "Trakea", "Bronkus"], c: 1, exp: "Faring (tekak) adalah persimpangan pernapasan dan pencernaan." },
+  { q: "Di mana letak pita suara manusia?", o: ["Faring", "Trakea", "Laring", "Alveolus"], c: 2, exp: "Pita suara terdapat di laring (pangkal tenggorokan)." },
+  { q: "Saluran yang menghubungkan laring dengan bronkus adalah...", o: ["Trakea", "Kerongkongan", "Faring", "Bronkiolus"], c: 0, exp: "Trakea (batang tenggorokan) menyalurkan udara ke bronkus." },
+  { q: "Cabang batang tenggorokan yang menuju paru-paru kanan dan kiri disebut...", o: ["Bronkiolus", "Alveolus", "Bronkus", "Pleura"], c: 2, exp: "Bronkus adalah dua cabang utama dari trakea." },
+  { q: "Cabang-cabang kecil dari bronkus di dalam paru-paru disebut...", o: ["Trakea", "Alveolus", "Bronkiolus", "Faring"], c: 2, exp: "Bronkus bercabang lagi menjadi saluran kecil yang disebut bronkiolus." },
+  { q: "Tempat terjadinya pertukaran oksigen dan karbon dioksida adalah...", o: ["Bronkiolus", "Alveolus", "Trakea", "Hidung"], c: 1, exp: "Alveolus berbentuk gelembung tempat pertukaran gas terjadi." },
+  { q: "Selaput tipis yang membungkus paru-paru disebut...", o: ["Pleura", "Diafragma", "Alveolus", "Epidermis"], c: 0, exp: "Pleura melindungi paru-paru dari gesekan saat bernapas." },
+  { q: "Otot utama yang berperan dalam pernapasan, terletak di bawah paru-paru, adalah...", o: ["Otot dada", "Otot perut", "Diafragma", "Otot antar tulang rusuk"], c: 2, exp: "Diafragma membatasi rongga dada dan perut, penting untuk inspirasi/ekspirasi." },
+  { q: "Proses menghirup udara (oksigen) masuk ke paru-paru disebut...", o: ["Inspirasi", "Ekspirasi", "Respirasi", "Oksidasi"], c: 0, exp: "Inspirasi adalah proses udara masuk ke paru-paru." },
+  { q: "Proses mengeluarkan udara (karbon dioksida) dari paru-paru disebut...", o: ["Inspirasi", "Ekspirasi", "Pencernaan", "Sirkulasi"], c: 1, exp: "Ekspirasi adalah saat kita menghembuskan napas." },
+  { q: "Saat kita menarik napas (inspirasi), yang terjadi pada diafragma adalah...", o: ["Melengkung ke atas", "Mendatar (kontraksi)", "Bergetar", "Mengecil"], c: 1, exp: "Saat inspirasi, diafragma berkontraksi dan menjadi datar." },
+  { q: "Gas yang dibutuhkan tubuh untuk menghasilkan energi dari makanan adalah...", o: ["Karbon dioksida", "Nitrogen", "Oksigen", "Hidrogen"], c: 2, exp: "Oksigen penting untuk proses oksidasi biologi (menghasilkan energi)." },
+  { q: "Gas sisa pernapasan yang harus dikeluarkan dari tubuh adalah...", o: ["Oksigen", "Karbon monoksida", "Karbon dioksida", "Helium"], c: 2, exp: "Karbon dioksida (CO2) adalah gas sisa yang dibuang saat ekspirasi." },
+  { q: "Penyakit peradangan pada cabang tenggorokan (bronkus) disebut...", o: ["Asma", "Bronkitis", "TBC", "Pneumonia"], c: 1, exp: "Bronkitis adalah infeksi atau peradangan pada bronkus." },
+  { q: "Penyakit penyempitan saluran pernapasan yang menyebabkan sesak napas adalah...", o: ["Asma", "Influenza", "Polip", "Kanker paru"], c: 0, exp: "Asma ditandai dengan menyempitnya saluran napas, sering dipicu alergi." },
+  { q: "Penyakit TBC (Tuberkulosis) disebabkan oleh...", o: ["Virus Influenza", "Bakteri Mycobacterium tuberculosis", "Asap rokok", "Kekurangan vitamin"], c: 1, exp: "TBC disebabkan oleh infeksi bakteri." },
+  { q: "Salah satu cara menjaga kesehatan organ pernapasan adalah...", o: ["Merokok", "Berolahraga teratur", "Tidur larut malam", "Sering makan makanan pedas"], c: 1, exp: "Olahraga teratur membantu paru-paru bekerja lebih optimal." },
+  { q: "Bahaya utama asap rokok bagi organ pernapasan adalah...", o: ["Meningkatkan oksigen", "Membersihkan paru-paru", "Mengandung zat beracun (nikotin, tar)", "Membunuh virus"], c: 2, exp: "Asap rokok mengandung racun yang merusak silia dan sel paru-paru." },
+  { q: "Mengapa sebaiknya kita bernapas melalui hidung, bukan mulut?", o: ["Lebih cepat", "Udara disaring, dihangatkan, dilembapkan", "Mulut untuk makan saja", "Tidak ada bedanya"], c: 1, exp: "Hidung memiliki rambut dan lendir penyaring serta pembuluh darah penghangat." },
+  { q: "Zat pada darah yang berfungsi mengikat oksigen di paru-paru adalah...", o: ["Plasma darah", "Trombosit", "Hemoglobin", "Sel darah putih"], c: 2, exp: "Hemoglobin dalam sel darah merah bertugas mengikat oksigen." },
+  { q: "Gejala umum penyakit influenza (flu) adalah...", o: ["Batuk, pilek, demam", "Sakit perut hebat", "Kulit gatal", "Mata merah"], c: 0, exp: "Flu menyerang saluran pernapasan atas menyebabkan pilek dan demam." },
+  { q: "Pneumonia sering disebut juga dengan penyakit...", o: ["Paru-paru basah", "Kanker paru", "Asma", "Bronkitis"], c: 0, exp: "Pneumonia menyebabkan alveolus terisi cairan (paru-paru basah)." },
+  { q: "Fungsi lendir (mukus) di dalam rongga hidung adalah...", o: ["Membunuh kuman", "Melembapkan udara dan menangkap kotoran", "Menghasilkan suara", "Mengatur suhu tubuh"], c: 1, exp: "Lendir menjaga kelembapan dan memerangkap kotoran halus." },
+  { q: "Polusi udara di kota besar (asap kendaraan/pabrik) dapat menyebabkan...", o: ["Paru-paru lebih sehat", "Gangguan pernapasan (ISPA)", "Tubuh lebih kuat", "Penurunan suhu bumi"], c: 1, exp: "Polusi memicu Infeksi Saluran Pernapasan Akut (ISPA)." },
+  { q: "Organ yang berfungsi menutup saluran tenggorokan saat kita menelan makanan agar tidak tersedak adalah...", o: ["Epiglotis", "Pita suara", "Amandel", "Uvula"], c: 0, exp: "Epiglotis bertindak seperti katup yang menutup trakea saat menelan." },
+  { q: "Urutan masuknya udara pernapasan yang benar adalah...", o: ["Hidung - laring - faring - bronkus - trakea - paru-paru", "Hidung - faring - laring - trakea - bronkus - paru-paru", "Hidung - trakea - faring - laring - bronkus - paru-paru", "Hidung - bronkus - laring - faring - trakea - paru-paru"], c: 1, exp: "Urutan: Hidung > Faring > Laring > Trakea > Bronkus > Paru-paru." },
+  { q: "Berapa jumlah lobus (gelambir) pada paru-paru kanan manusia?", o: ["2", "3", "4", "1"], c: 1, exp: "Paru-paru kanan ada 3 lobus, paru-paru kiri 2 lobus (karena ada jantung)." },
+  { q: "Kebiasaan memakai masker di area berdebu bertujuan untuk...", o: ["Menghindari bau tidak sedap", "Mencegah debu & partikel kotor masuk ke saluran napas", "Agar tidak dikenali", "Menghangatkan wajah"], c: 1, exp: "Masker menyaring partikel berbahaya agar tidak terhirup." }
+];
+
+const LEVELS = [
+  { name: "LEVEL 1: Gerbang Hidung", map: ["1111111111111111111","1200001000001000001","1011101011101011101","1000000000000000001","1011101141111011101","1000001000001000001","1111101011101011111","1000000030000000061","1011111111111111111"] },
+  { name: "LEVEL 2: Jalur Udara", map: ["1111111111111111111","1200000001000000001","1011111101011111101","1000030001000500001","1011111104011111101","1000000101010000001","1111110101010111111","1000000001000003061","1111111111111111111"] },
+  { name: "LEVEL 3: Cabang Paru-paru", map: ["1111111111111111111","1200000040003000001","1110111111111110111","1000100000000010001","1011101110111011101","1005101000001010001","1011101011101011101","1000000003000000061","1111111111111111111"] },
+  { name: "LEVEL 4: Zona Alveolus", map: ["1111111111111111111","1200100000001000001","1110101111101011101","1000001300100010001","1011111010111410111","1010000010000010001","1010111111111011101","1005000030000000061","1111111111111111111"] },
+  { name: "LEVEL 5: Mesin Pernapasan", map: ["1111111111111111111","1200000001000000001","1011111101011111101","1013000004000005101","1010111111111110101","1010100000000010101","1000101111111010001","1110000300000000161","1111111111111111111"] },
+  { name: "LEVEL 6: Lindungi Paru-paru", map: ["1111111111111111111","1200001000001000501","1011101011101011111","1013000001000000001","1010111141411110101","1000000001000003101","1111101111111011101","1000000000000000061","1111111111111111111"] }
+];
+
+const Audio = {
+  ctx: null,
+  enabled: true,
+  menuMusicTimer: null,
+  menuMusicStep: 0,
+  init() { if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); if(this.ctx.state === 'suspended') this.ctx.resume(); },
+  play(freq, type, duration, vol=0.1) {
+    if(!this.enabled || !this.ctx) return;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = type; osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+    gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + duration);
+    osc.connect(gain); gain.connect(this.ctx.destination);
+    osc.start(); osc.stop(this.ctx.currentTime + duration);
+  },
+  o2() { this.play(800, 'sine', 0.1); },
+  power() { this.play(400, 'square', 0.5); this.play(600, 'square', 0.5, 0.1); },
+  correct() { this.play(600, 'triangle', 0.1); setTimeout(()=>this.play(800, 'triangle', 0.2), 100); },
+  wrong() { this.play(200, 'sawtooth', 0.3); },
+  hit() { this.play(150, 'sawtooth', 0.4); },
+  eatEnemy() { this.play(900, 'sine', 0.2); setTimeout(()=>this.play(1200, 'sine', 0.2), 100); },
+  win() { [400,500,600,800,1000].forEach((f,i) => setTimeout(()=>this.play(f, 'square', 0.2), i*150)); },
+  startMenuMusic() {
+    if(this.menuMusicTimer || !this.enabled) return;
+    this.init();
+    const melody = [523, 659, 784, 659, 523, 392, 440, 523, 659, 784, 880, 784, 659, 523, 440, 392];
+    this.menuMusicStep = 0;
+    const tick = () => {
+      if(!this.enabled || !document.getElementById('screen-splash')?.classList.contains('active')) { this.stopMenuMusic(); return; }
+      this.play(melody[this.menuMusicStep % melody.length], 'square', 0.12, 0.045);
+      this.menuMusicStep++;
+    };
+    tick(); this.menuMusicTimer = setInterval(tick, 150);
+  },
+  stopMenuMusic() {
+    if(this.menuMusicTimer) { clearInterval(this.menuMusicTimer); this.menuMusicTimer = null; }
+  }
+};
+
+let speedMultiplier = 1;
+
+const shuffle = (array) => {
+  let cur = array.length, rand;
+  while(cur != 0) { rand = Math.floor(Math.random() * cur); cur--; [array[cur], array[rand]] = [array[rand], array[cur]]; }
+  return array;
+};
+
+class Entity {
+  constructor(c, r, size, speed) {
+    this.c = c; this.r = r; this.x = c * size; this.y = r * size;
+    this.size = size; this.speed = speed; this.vx = 0; this.vy = 0;
+    this.dir = { x: 0, y: 0 }; this.nextDir = { x: 0, y: 0 };
+  }
+  updatePos(map) {
+    // Snap at tile centers with a tolerance so fractional speeds stay responsive.
+    const nearTile = (value) => Math.abs(value - Math.round(value / this.size) * this.size) <= Math.min(1, this.speed * 0.5);
+    if(nearTile(this.x) && nearTile(this.y)) {
+      this.x = Math.round(this.x / this.size) * this.size;
+      this.y = Math.round(this.y / this.size) * this.size;
+      if(this.nextDir.x !== 0 || this.nextDir.y !== 0) {
+        if(this.canMove(this.nextDir.x, this.nextDir.y, map)) this.dir = {...this.nextDir};
+      }
+    } else if(this.nextDir.x !== 0 || this.nextDir.y !== 0) {
+      if ((this.nextDir.x === -this.dir.x && this.dir.x !== 0) || (this.nextDir.y === -this.dir.y && this.dir.y !== 0)) {
+        this.dir = {...this.nextDir};
+      }
+    }
+    if(this.dir.x !== 0 || this.dir.y !== 0) {
+      if(this.canMove(this.dir.x, this.dir.y, map)) {
+        this.x += this.dir.x * this.speed; this.y += this.dir.y * this.speed;
+      } else {
+        this.x = Math.round(this.x / this.size) * this.size;
+        this.y = Math.round(this.y / this.size) * this.size;
+        this.dir = {x:0,y:0};
+      }
+    }
+    this.c = Math.floor((this.x + this.size/2) / this.size);
+    this.r = Math.floor((this.y + this.size/2) / this.size);
+  }
+  canMove(dx, dy, map) {
+    let nextX = this.x + dx * this.speed; let nextY = this.y + dy * this.speed;
+    let margin = 2;
+    let l = Math.floor((nextX + margin) / this.size);
+    let r = Math.floor((nextX + this.size - margin - 1) / this.size);
+    let t = Math.floor((nextY + margin) / this.size);
+    let b = Math.floor((nextY + this.size - margin - 1) / this.size);
+    if (l < 0 || r >= map[0].length || t < 0 || b >= map.length) return false;
+    const isSolid = (val) => val === 1;
+    return !(isSolid(map[t][l]) || isSolid(map[t][r]) || isSolid(map[b][l]) || isSolid(map[b][r]));
+  }
+}
+
+class Player extends Entity {
+  constructor(c, r, size) {
+    super(c, r, size, CONFIG.playerSpeed * speedMultiplier);
+    this.color = CONFIG.colors.player; this.spawn = {c,r,x:this.x,y:this.y};
+  }
+  draw(ctx, isPowered) {
+    let cx = this.x + this.size/2, cy = this.y + this.size/2, rad = this.size * 0.4;
+    if(isPowered) {
+      ctx.beginPath(); ctx.arc(cx, cy, rad+4, 0, Math.PI*2);
+      ctx.fillStyle = (Date.now()%200<100)? 'white' : '#fee440'; ctx.fill();
+    }
+    ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI*2);
+    ctx.fillStyle = this.color; ctx.fill();
+    ctx.fillStyle = 'white';
+    ctx.beginPath(); ctx.arc(cx - rad*0.3, cy - rad*0.2, rad*0.25, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx + rad*0.3, cy - rad*0.2, rad*0.25, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = 'black';
+    let lx = (this.dir.x)*2; let ly = (this.dir.y)*2;
+    ctx.beginPath(); ctx.arc(cx - rad*0.3 + lx, cy - rad*0.2 + ly, rad*0.1, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx + rad*0.3 + lx, cy - rad*0.2 + ly, rad*0.1, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = 'white'; ctx.font = `bold ${rad*0.5}px Arial`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText("O\u2082", cx, cy + rad*0.4);
+  }
+  die() {
+    this.x = this.spawn.x; this.y = this.spawn.y;
+    this.c = this.spawn.c; this.r = this.spawn.r;
+    this.dir = {x:0,y:0}; this.nextDir = {x:0,y:0};
+  }
+}
+
+class Enemy extends Entity {
+  constructor(c, r, size, typeIdx) {
+    super(c, r, size, CONFIG.enemySpeed);
+    this.color = CONFIG.colors.enemy[typeIdx % CONFIG.colors.enemy.length];
+    this.spawn = {c,r,x:this.x,y:this.y}; this.typeIdx = typeIdx;
+  }
+  updateAI(map, targetC, targetR, isFleeing) {
+    this.speed = (isFleeing ? CONFIG.fleeSpeed : CONFIG.enemySpeed) * speedMultiplier;
+    // Slow/fast modes can use fractional speeds, so use a tolerance and snap
+    // to the tile center before choosing a new corridor.
+    const nearTile = (value) => Math.abs(value - Math.round(value / this.size) * this.size) <= Math.min(1, this.speed * 0.5);
+    if(nearTile(this.x) && nearTile(this.y)) {
+      this.x = Math.round(this.x / this.size) * this.size;
+      this.y = Math.round(this.y / this.size) * this.size;
+      this.c = Math.round(this.x / this.size);
+      this.r = Math.round(this.y / this.size);
+      let options = [{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}];
+      let valid = []; let bestDist = isFleeing ? -1 : 9999; let bestDir = {x:0,y:0};
+      options.forEach(d => {
+        if(d.x === -this.dir.x && d.y === -this.dir.y && (this.dir.x!==0 || this.dir.y!==0)) return;
+        let nc = this.c + d.x, nr = this.r + d.y;
+        if(nc>=0 && nr>=0 && nc<map[0].length && nr<map.length && map[nr][nc] !== 1 && map[nr][nc] !== 4) {
+          valid.push(d);
+          let dist = Math.abs(nc - targetC) + Math.abs(nr - targetR);
+          if(isFleeing ? dist > bestDist : dist < bestDist) { bestDist = dist; bestDir = d; }
+        }
+      });
+      if(valid.length > 0) {
+        if(Math.random() < 0.3) this.dir = valid[Math.floor(Math.random() * valid.length)];
+        else this.dir = bestDir.x !== 0 || bestDir.y !== 0 ? bestDir : valid[0];
+      } else { this.dir = {x: -this.dir.x, y: -this.dir.y}; }
+    }
+    const nextX = this.x + this.dir.x * this.speed;
+    const nextY = this.y + this.dir.y * this.speed;
+    const nextC = Math.floor((nextX + this.size/2) / this.size);
+    const nextR = Math.floor((nextY + this.size/2) / this.size);
+    if(nextR >= 0 && nextR < map.length && nextC >= 0 && nextC < map[0].length && map[nextR][nextC] !== 1 && map[nextR][nextC] !== 4) {
+      this.x = nextX; this.y = nextY;
+    } else {
+      this.x = Math.round(this.x / this.size) * this.size;
+      this.y = Math.round(this.y / this.size) * this.size;
+      this.dir = {x:0,y:0};
+    }
+    this.c = Math.round(this.x / this.size);
+    this.r = Math.round(this.y / this.size);
+  }
+  draw(ctx, isFleeing) {
+    let cx = this.x + this.size/2, cy = this.y + this.size/2, rad = this.size * 0.4;
+    ctx.fillStyle = isFleeing ? '#4361ee' : this.color;
+    ctx.beginPath();
+    for(let i=0; i<8; i++) {
+      let a = (Math.PI/4)*i + (Date.now()/500);
+      let r = rad + (i%2==0?2:-2);
+      ctx.lineTo(cx + Math.cos(a)*r, cy + Math.sin(a)*r);
+    }
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = isFleeing ? 'pink' : (this.typeIdx%2===0?'red':'yellow');
+    ctx.beginPath(); ctx.arc(cx - rad*0.3, cy - rad*0.2, rad*0.15, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx + rad*0.3, cy - rad*0.2, rad*0.15, 0, Math.PI*2); ctx.fill();
+    if(isFleeing) {
+      ctx.strokeStyle = 'white'; ctx.beginPath(); ctx.moveTo(cx-rad*0.2, cy+rad*0.2); ctx.lineTo(cx+rad*0.2, cy+rad*0.3); ctx.stroke();
+    } else {
+      ctx.strokeStyle = 'black'; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(cx-rad*0.2, cy+rad*0.3); ctx.lineTo(cx+rad*0.2, cy+rad*0.2); ctx.stroke();
+    }
+  }
+  die() {
+    this.x = this.spawn.x; this.y = this.spawn.y; this.c = this.spawn.c; this.r = this.spawn.r;
+    this.dir = {x:0,y:0};
+  }
+}
+
+class PlayerGame {
+  constructor(id) {
+    this.id = id;
+    this.canvas = document.createElement('canvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.container = document.createElement('div');
+    this.container.className = 'player-container';
+    this.hud = document.createElement('div');
+    this.hud.className = 'hud';
+    this.hudStats = document.createElement('div');
+    this.hudStats.className = 'hud-stats';
+    this.hudCombo = document.createElement('div');
+    this.hudCombo.className = 'combo-text';
+    this.hud.appendChild(this.hudStats);
+    this.hud.appendChild(this.hudCombo);
+    this.qModal = document.createElement('div');
+    this.qModal.className = 'q-modal';
+    this.qModal.innerHTML = `<div class="q-box"><h3 style="color:var(--warning); margin-bottom:10px;">QUESTION GATE</h3><div class="q-text" id="q-text-${id}"></div><div class="options" id="q-opts-${id}"></div><div class="q-feedback" id="q-feedback-${id}"></div></div>`;
+    this.container.appendChild(this.canvas);
+    this.container.appendChild(this.hud);
+    this.container.appendChild(this.qModal);
+    document.getElementById('game-wrapper').appendChild(this.container);
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+    this.resetState();
+  }
+  resetState() {
+    this.level = 0; this.score = 0; this.lives = CONFIG.lives; this.combo = 0;
+    this.correctAnswers = 0; this.wrongAnswers = 0;
+    this.timeStart = Date.now(); this.isFinished = false; this.isPaused = false;
+    this.questionQueue = shuffle([...QUESTION_BANK]); this.loadLevel();
+  }
+  resize() { this.canvas.width = this.container.clientWidth; this.canvas.height = this.container.clientHeight; }
+  loadLevel() {
+    if(this.level >= LEVELS.length) { this.victory(); return; }
+    let levelData = LEVELS[this.level];
+    this.map = levelData.map.map(row => row.split('').map(Number));
+    this.ts = CONFIG.tileSize;
+    this.player = null; this.enemies = []; this.totalO2 = 0; this.o2Collected = 0;
+    this.gates = []; this.portals = [];
+    for(let r=0; r<this.map.length; r++) {
+      for(let c=0; c<this.map[r].length; c++) {
+        let val = this.map[r][c];
+        if(val === 2) this.player = new Player(c, r, this.ts);
+        else if(val === 3) Object.assign(this.map[r][c] = 0, this.enemies.push(new Enemy(c, r, this.ts, this.enemies.length)));
+        else if(val === 0) this.totalO2++;
+        else if(val === 4) this.gates.push({c,r});
+        else if(val === 6) { this.portals.push({c,r}); this.map[r][c] = 8; }
+      }
+    }
+    this.powerMode = false; this.powerTimer = 0; this.invincibility = 0; this.gateActive = null; this.updateHUD();
+  }
+  updateHUD() {
+    let m = Math.floor((Date.now() - this.timeStart)/60000);
+    let s = Math.floor(((Date.now() - this.timeStart)%60000)/1000);
+    this.hudStats.innerHTML = `<span>${playerNames[this.id - 1] || `P${this.id}`}</span><span>⭐ ${this.score}</span><span>${'❤️'.repeat(this.lives)}</span><span>O₂ ${this.o2Collected}/${this.totalO2}</span><span>Lvl ${this.level+1}</span><span>⏱ ${m}:${s<10?'0'+s:s}</span>`;
+    if(this.combo > 1) { this.hudCombo.textContent = `🔥 x${this.combo}`; this.hudCombo.classList.add('active'); }
+    else { this.hudCombo.classList.remove('active'); }
+  }
+  update() {
+    if(this.isFinished || this.isPaused) return;
+    this.player.updatePos(this.map);
+    let pc = this.player.c, pr = this.player.r;
+    let cell = this.map[pr][pc];
+    if(cell === 0) { this.map[pr][pc] = 8; this.o2Collected++; this.score += 10; Audio.o2();
+      if(this.o2Collected / this.totalO2 >= CONFIG.reqO2Percent) { this.portals.forEach(p => this.map[p.r][p.c] = 6); }
+    } else if(cell === 5) { this.map[pr][pc] = 8; this.powerMode = true; this.powerTimer = Date.now(); this.score += 25; Audio.power();
+    } else if(cell === 6) { Audio.win(); this.level++; this.loadLevel(); return; }
+    let margin = 8;
+    let hitGate = this.gates.find(g => this.map[g.r][g.c] === 4 && this.player.x + this.ts - margin > g.c*this.ts && this.player.x + margin < g.c*this.ts + this.ts && this.player.y + this.ts - margin > g.r*this.ts && this.player.y + margin < g.r*this.ts + this.ts);
+    if(hitGate) {
+      if (this.player.dir.x > 0) this.player.x = (hitGate.c - 1) * this.ts;
+      else if (this.player.dir.x < 0) this.player.x = (hitGate.c + 1) * this.ts;
+      else if (this.player.dir.y > 0) this.player.y = (hitGate.r - 1) * this.ts;
+      else if (this.player.dir.y < 0) this.player.y = (hitGate.r + 1) * this.ts;
+      else { this.player.x = Math.round(this.player.x / this.ts) * this.ts; this.player.y = Math.round(this.player.y / this.ts) * this.ts; }
+      this.player.dir = {x:0,y:0}; this.player.nextDir = {x:0,y:0};
+      this.openQuestion(hitGate);
+    }
+    if(this.powerMode && Date.now() - this.powerTimer > CONFIG.powerDuration) { this.powerMode = false; }
+    if(this.invincibility > 0) this.invincibility -= 16;
+    this.enemies.forEach(e => {
+      e.updateAI(this.map, pc, pr, this.powerMode);
+      let dist = Math.hypot((this.player.x - e.x), (this.player.y - e.y));
+      if(dist < this.ts * 0.8) {
+        if(this.powerMode) { e.die(); this.score += 50; Audio.eatEnemy(); }
+        else if(this.invincibility <= 0) { this.lives--; Audio.hit();
+          if(this.lives <= 0) { this.gameOver(); }
+          else { this.player.die(); this.invincibility = 2000; this.combo = 0; }
+        }
+      }
+    });
+    if(Date.now() % 1000 < 20) this.updateHUD();
+  }
+  draw() {
+    let ctx = this.ctx; ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    let mapW = this.map[0].length * this.ts; let mapH = this.map.length * this.ts;
+    let scale = Math.min(this.canvas.width / mapW, this.canvas.height / mapH);
+    let offsetX = (this.canvas.width - mapW * scale) / 2; let offsetY = (this.canvas.height - mapH * scale) / 2;
+    ctx.save(); ctx.translate(offsetX, offsetY); ctx.scale(scale, scale);
+    for(let r=0; r<this.map.length; r++) {
+      for(let c=0; c<this.map[r].length; c++) {
+        let val = this.map[r][c]; let x = c * this.ts, y = r * this.ts;
+        if(val === 1) { let wallGrad = ctx.createLinearGradient(x, y, x, y + this.ts); wallGrad.addColorStop(0, '#66e8ff'); wallGrad.addColorStop(.45, '#168fd2'); wallGrad.addColorStop(1, '#07529d'); ctx.fillStyle = wallGrad; ctx.shadowColor = '#46ddff'; ctx.shadowBlur = 9; ctx.fillRect(x + 1, y + 1, this.ts - 2, this.ts - 2); ctx.shadowBlur = 0; ctx.strokeStyle = '#9af4ff'; ctx.lineWidth = 1.5; ctx.strokeRect(x + 2, y + 2, this.ts - 4, this.ts - 4); ctx.strokeStyle = 'rgba(180,250,255,.38)'; ctx.beginPath(); ctx.moveTo(x + 8, y + this.ts - 8); ctx.quadraticCurveTo(x + this.ts*.35, y + this.ts*.55, x + this.ts*.56, y + this.ts*.28); ctx.quadraticCurveTo(x + this.ts*.72, y + this.ts*.18, x + this.ts - 7, y + 8); ctx.stroke(); }
+        else if(val === 0) { ctx.fillStyle = '#7ff5ff'; ctx.shadowColor = '#1edcff'; ctx.shadowBlur = 12; ctx.beginPath(); ctx.arc(x+this.ts/2, y+this.ts/2, this.ts*0.13 + Math.sin(Date.now()/180 + x)*1.5, 0, Math.PI*2); ctx.fill(); ctx.shadowBlur = 0; }
+        else if(val === 4) { ctx.fillStyle = '#ef4f9a'; ctx.shadowColor = '#ff8bc2'; ctx.shadowBlur = 14; ctx.fillRect(x + 2, y + 2, this.ts - 4, this.ts - 4); ctx.shadowBlur = 0; ctx.fillStyle = 'white'; ctx.font = `bold ${this.ts*0.6}px Arial`; ctx.textAlign = 'center'; ctx.textBaseline='middle'; ctx.fillText("?", x+this.ts/2, y+this.ts/2); }
+        else if(val === 5) { ctx.fillStyle = CONFIG.colors.power; let s = this.ts/2 + Math.sin(Date.now()/200)*3; ctx.beginPath(); ctx.arc(x+this.ts/2, y+this.ts/2, s*0.4, 0, Math.PI*2); ctx.fill(); ctx.shadowBlur = 10; ctx.shadowColor = CONFIG.colors.power; ctx.fill(); ctx.shadowBlur = 0; }
+        else if(val === 6) { ctx.fillStyle = CONFIG.colors.portal; ctx.beginPath(); ctx.arc(x+this.ts/2, y+this.ts/2, this.ts*0.4, 0, Math.PI*2); ctx.fill(); ctx.fillStyle = 'white'; ctx.font = `bold ${this.ts*0.3}px Arial`; ctx.fillText("EXIT", x+this.ts/2, y+this.ts/2); }
+      }
+    }
+    this.enemies.forEach(e => e.draw(ctx, this.powerMode));
+    if(this.invincibility <= 0 || Math.floor(Date.now()/100)%2===0) { this.player.draw(ctx, this.powerMode); }
+    ctx.restore();
+  }
+  openQuestion(gate) {
+    this.isPaused = true; this.gateActive = gate;
+    if(this.questionQueue.length === 0) this.questionQueue = shuffle([...QUESTION_BANK]);
+    let qData = this.questionQueue.pop(); this.currentQ = qData;
+    document.getElementById(`q-text-${this.id}`).textContent = qData.q;
+    let opts = document.getElementById(`q-opts-${this.id}`); opts.innerHTML = '';
+    let oArr = qData.o.map((text, i) => ({text, isCorrect: i===qData.c})); shuffle(oArr);
+    oArr.forEach((opt, idx) => {
+      let btn = document.createElement('button'); btn.className = 'opt-btn';
+      btn.textContent = String.fromCharCode(65+idx) + ". " + opt.text;
+      btn.onclick = () => this.answerQuestion(opt.isCorrect, btn); opts.appendChild(btn);
+    });
+    let fb = document.getElementById(`q-feedback-${this.id}`); fb.style.display = 'none'; fb.className = 'q-feedback';
+    this.qModal.classList.add('active'); Audio.init();
+  }
+  answerQuestion(isCorrect, btnEl) {
+    let btns = document.getElementById(`q-opts-${this.id}`).querySelectorAll('.opt-btn');
+    btns.forEach(b => b.disabled = true);
+    let fb = document.getElementById(`q-feedback-${this.id}`); fb.style.display = 'block';
+    if(isCorrect) {
+      Audio.correct(); btnEl.style.background = 'var(--success)'; btnEl.style.color = 'white';
+      fb.textContent = `✓ BENAR! ${this.currentQ.exp}`;
+      fb.style.background = 'rgba(138, 201, 38, 0.2)'; fb.style.color = 'var(--success)';
+      this.score += 100 * (this.combo > 0 ? (this.combo >= 5 ? 2 : (this.combo >= 3 ? 1.5 : 1.2)) : 1);
+      this.combo++; this.correctAnswers++; this.map[this.gateActive.r][this.gateActive.c] = 8;
+    } else {
+      Audio.wrong(); btnEl.style.background = 'var(--danger)'; btnEl.style.color = 'white';
+      fb.textContent = `✕ BELUM TEPAT! ${this.currentQ.exp}`;
+      fb.style.background = 'rgba(255, 89, 94, 0.2)'; fb.style.color = 'var(--danger)';
+      this.combo = 0; this.wrongAnswers++; this.lives--;
+      if(this.lives <= 0) { setTimeout(()=>this.gameOver(), 1500); return; }
+    }
+    this.updateHUD();
+    setTimeout(() => { this.qModal.classList.remove('active'); this.isPaused = false; this.gateActive = null; }, 2500);
+  }
+  gameOver() { this.isFinished = true; showGameOver(`MISSION FAILED (P${this.id})`, this); }
+  victory() { this.isFinished = true; this.score += 500; showGameOver(`🎉 RESPIRATORY HERO! (P${this.id})`, this); }
+}
+
+let players = []; let currentMode = 1; let animFrame; let globalPaused = false;
+
+function initAudioContext() { Audio.init(); if(document.getElementById('screen-splash')?.classList.contains('active')) Audio.startMenuMusic(); document.removeEventListener('click', initAudioContext); document.removeEventListener('keydown', initAudioContext); document.removeEventListener('touchstart', initAudioContext); }
+document.addEventListener('click', initAudioContext); document.addEventListener('keydown', initAudioContext); document.addEventListener('touchstart', initAudioContext);
+
+function showSplash() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-splash').classList.add('active');
+  document.getElementById('game-wrapper').innerHTML = '';
+  document.getElementById('controls').style.display = 'none';
+  cancelAnimationFrame(animFrame);
+  Audio.startMenuMusic();
+}
+
+function showMenu() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-menu').classList.add('active');
+  document.getElementById('game-wrapper').innerHTML = '';
+  document.getElementById('controls').style.display = 'none';
+  cancelAnimationFrame(animFrame);
+}
+
+let pendingMode = 1;
+let playerNames = ['Pemain 1', 'Pemain 2'];
+function openPlayerNames(numPlayers) {
+  pendingMode = numPlayers;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-player-names').classList.add('active');
+  const secondField = document.getElementById('name-field-2');
+  secondField.hidden = numPlayers !== 2;
+  document.getElementById('player-name-1').required = true;
+  document.getElementById('player-name-2').required = numPlayers === 2;
+  document.getElementById('player-name-1').focus();
+}
+document.getElementById('player-names-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const first = document.getElementById('player-name-1').value.trim();
+  const second = document.getElementById('player-name-2').value.trim();
+  if(!first || (pendingMode === 2 && !second)) return;
+  playerNames = [first, pendingMode === 2 ? second : 'Pemain 2'];
+  startGame(pendingMode);
+});
+document.getElementById('names-back-btn').addEventListener('click', showMenu);
+
+function startGame(numPlayers) {
+  Audio.init(); Audio.stopMenuMusic(); currentMode = numPlayers;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  let wrapper = document.getElementById('game-wrapper'); wrapper.innerHTML = ''; players = [];
+  for(let i=1; i<=numPlayers; i++) { players.push(new PlayerGame(i)); }
+  if(numPlayers === 1 && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
+    document.getElementById('controls').style.display = 'flex';
+  } else { document.getElementById('controls').style.display = 'none'; }
+  globalPaused = false; lastTime = performance.now(); gameLoop(lastTime);
+}
+
+function showGameOver(title, pg) {
+  globalPaused = true;
+  document.getElementById('screen-gameover').classList.add('active');
+  document.getElementById('go-title').textContent = title;
+  let acc = pg.correctAnswers + pg.wrongAnswers > 0 ? Math.round((pg.correctAnswers/(pg.correctAnswers+pg.wrongAnswers))*100) : 0;
+  document.getElementById('go-stats').innerHTML = `<b>SCORE:</b> ${Math.round(pg.score)}<br><b>O₂:</b> ${pg.o2Collected}<br><b>BENAR:</b> ${pg.correctAnswers}<br><b>SALAH:</b> ${pg.wrongAnswers}<br><b>AKURASI:</b> ${acc}%`;
+}
+
+let lastTime = 0;
+function applyHeldInput(player, bindings) {
+  if(!player || player.isPaused || !player.player) return;
+  const direction = bindings.find(({keys: keyNames, dir}) => keyNames.some(key => keys[key]))?.dir;
+  if(direction) player.player.nextDir = direction;
+}
+function gameLoop(timestamp) {
+  if(!globalPaused) {
+    applyHeldInput(players[0], [
+      {keys: ['ArrowUp', 'w', 'W'], dir: {x:0,y:-1}},
+      {keys: ['ArrowDown', 's', 'S'], dir: {x:0,y:1}},
+      {keys: ['ArrowLeft', 'a', 'A'], dir: {x:-1,y:0}},
+      {keys: ['ArrowRight', 'd', 'D'], dir: {x:1,y:0}}
+    ]);
+    applyHeldInput(players[1], [
+      {keys: ['ArrowUp'], dir: {x:0,y:-1}},
+      {keys: ['ArrowDown'], dir: {x:0,y:1}},
+      {keys: ['ArrowLeft'], dir: {x:-1,y:0}},
+      {keys: ['ArrowRight'], dir: {x:1,y:0}}
+    ]);
+    players.forEach(p => { p.update(); p.draw(); });
+  }
+  animFrame = requestAnimationFrame(gameLoop);
+}
+
+const keys = {};
+window.addEventListener('keydown', (e) => {
+  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
+  keys[e.key] = true;
+  if(e.key.toLowerCase() === 'p') togglePause();
+  if(players[0] && !players[0].isPaused) {
+    if(keys['ArrowUp'] || keys['w'] || keys['W']) players[0].player.nextDir = {x:0,y:-1};
+    if(keys['ArrowDown'] || keys['s'] || keys['S']) players[0].player.nextDir = {x:0,y:1};
+    if(keys['ArrowLeft'] || keys['a'] || keys['A']) players[0].player.nextDir = {x:-1,y:0};
+    if(keys['ArrowRight'] || keys['d'] || keys['D']) players[0].player.nextDir = {x:1,y:0};
+  }
+  if(players[1] && !players[1].isPaused) {
+    if(keys['ArrowUp']) players[1].player.nextDir = {x:0,y:-1};
+    if(keys['ArrowDown']) players[1].player.nextDir = {x:0,y:1};
+    if(keys['ArrowLeft']) players[1].player.nextDir = {x:-1,y:0};
+    if(keys['ArrowRight']) players[1].player.nextDir = {x:1,y:0};
+  }
+});
+window.addEventListener('keyup', (e) => { keys[e.key] = false; });
+
+const setupDPad = () => {
+  const dpad = document.getElementById('dpad1');
+  const dirs = [{c:'up', d:{x:0,y:-1}, t:'▲'}, {c:'left', d:{x:-1,y:0}, t:'◀'}, {c:'right', d:{x:1,y:0}, t:'▶'}, {c:'down', d:{x:0,y:1}, t:'▼'}];
+  dirs.forEach(dir => {
+    let btn = document.createElement('div');
+    btn.className = `dbtn ${dir.c}`; btn.textContent = dir.t;
+    const trigger = (e) => { e.preventDefault(); if(players[0] && !players[0].isPaused) players[0].player.nextDir = dir.d; };
+    btn.addEventListener('touchstart', trigger); btn.addEventListener('mousedown', trigger);
+    dpad.appendChild(btn);
+  });
+};
+setupDPad();
+
+let touchStartX = 0; let touchStartY = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; touchStartY = e.changedTouches[0].screenY; }, {passive:false});
+document.addEventListener('touchend', e => {
+  if(e.target.closest('button') || e.target.closest('.dpad')) return;
+  let tx = e.changedTouches[0].screenX, ty = e.changedTouches[0].screenY;
+  let dx = tx - touchStartX, dy = ty - touchStartY;
+  if(Math.abs(dx) > 30 || Math.abs(dy) > 30) {
+    if(players[0] && !players[0].isPaused) {
+      if(Math.abs(dx) > Math.abs(dy)) players[0].player.nextDir = dx > 0 ? {x:1,y:0} : {x:-1,y:0};
+      else players[0].player.nextDir = dy > 0 ? {x:0,y:1} : {x:0,y:-1};
+    }
+  }
+}, {passive:false});
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => {});
+  else if (document.exitFullscreen) document.exitFullscreen();
+}
+
+document.getElementById('btn-fs').addEventListener('click', toggleFullscreen);
+document.getElementById('btn-menu-fs').addEventListener('click', toggleFullscreen);
+document.getElementById('btn-settings-fs').addEventListener('click', toggleFullscreen);
+let settingsReturnScreen = 'screen-menu';
+const openSettings = () => {
+  const activeScreen = document.querySelector('.screen.active');
+  if(activeScreen && activeScreen.id !== 'screen-settings') settingsReturnScreen = activeScreen.id;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-settings').classList.add('active');
+};
+document.getElementById('btn-settings').addEventListener('click', openSettings);
+document.querySelector('[data-template-id="menu-settings-btn"]').addEventListener('click', openSettings);
+const closeSettings = () => {
+  document.getElementById('screen-settings').classList.remove('active');
+  document.getElementById(settingsReturnScreen)?.classList.add('active');
+};
+document.getElementById('btn-settings-close').addEventListener('click', closeSettings);
+document.getElementById('btn-settings-save').addEventListener('click', closeSettings);
+const toggleSound = (event) => {
+  // Prevent the document audio initializer from immediately restarting music.
+  if(event) { event.preventDefault(); event.stopPropagation(); }
+  const shouldEnable = !Audio.enabled;
+  if(!shouldEnable) Audio.stopMenuMusic();
+  Audio.enabled = shouldEnable;
+  if(Audio.enabled && document.getElementById('screen-splash')?.classList.contains('active')) Audio.startMenuMusic();
+  document.getElementById('btn-sound').textContent = Audio.enabled ? '🔊 SUARA: ON' : '🔇 SUARA: OFF';
+  document.getElementById('btn-menu-sound').textContent = Audio.enabled ? '🔊' : '🔇';
+  document.getElementById('btn-splash-music').textContent = Audio.enabled ? '🔊 MUSIK: ON' : '🔇 MUSIK: OFF';
+};
+document.getElementById('btn-sound').addEventListener('click', toggleSound);
+document.getElementById('btn-menu-sound').addEventListener('click', toggleSound);
+document.getElementById('btn-splash-music').addEventListener('click', toggleSound);
+
+function togglePause() {
+  if(!players.length || players[0].isFinished) return;
+  globalPaused = !globalPaused;
+  if(globalPaused) {
+    let pauseOverlay = document.createElement('div');
+    pauseOverlay.id = 'pause-overlay'; pauseOverlay.className = 'screen active';
+    pauseOverlay.innerHTML = `<h1>PAUSED</h1><button onclick="togglePause()">▶ LANJUTKAN</button><button onclick="showMenu(); document.getElementById('pause-overlay').remove();">🏠 MENU UTAMA</button>`;
+    document.body.appendChild(pauseOverlay);
+  } else { let po = document.getElementById('pause-overlay'); if(po) po.remove(); }
+}
+document.getElementById('btn-pause').addEventListener('click', togglePause);
+</script>
+ 
+</body></html>
