@@ -49,11 +49,17 @@
   .opt-btn:hover { background: var(--accent); color: var(--bg); }
   .q-feedback { margin-top: 15px; font-size: 1.2rem; font-weight: bold; display: none; padding: 10px; border-radius: 5px; }
   
-  #controls { position: absolute; bottom: 10px; width: 100%; display: none; justify-content: space-between; padding: 0 20px; z-index: 20; pointer-events: none; }
-  .dpad { display: grid; grid-template-columns: repeat(3, 50px); grid-template-rows: repeat(3, 50px); gap: 5px; pointer-events: auto; }
-  .dbtn { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.5); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-  .dbtn:active { background: rgba(255,255,255,0.5); }
-  .up { grid-column: 2; grid-row: 1; } .left { grid-column: 1; grid-row: 2; } .right { grid-column: 3; grid-row: 2; } .down { grid-column: 2; grid-row: 3; }
+  /* Controller / D-Pad Styles */
+  #controls { position: absolute; bottom: 20px; width: 100%; display: none; flex-direction: row; justify-content: space-between; padding: 0 5%; z-index: 50; pointer-events: none; }
+  .dpad-container { display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: auto; }
+  .dpad-label { font-weight: bold; font-size: 1rem; color: var(--warning); text-shadow: 1px 1px 3px rgba(0,0,0,0.8); background: rgba(0,0,0,0.5); padding: 4px 12px; border-radius: 12px; letter-spacing: 0.5px; }
+  .dpad { display: grid; grid-template-columns: repeat(3, clamp(45px, 12vw, 60px)); grid-template-rows: repeat(3, clamp(45px, 12vw, 60px)); gap: 6px; }
+  .dbtn { background: rgba(8, 121, 201, 0.7); border: 2px solid rgba(85, 220, 255, 0.8); border-radius: 15px; color: white; display: flex; align-items: center; justify-content: center; font-size: clamp(1.4rem, 4vw, 2rem); box-shadow: 0 4px 10px rgba(0,0,0,0.5); cursor: pointer; user-select: none; transition: all 0.1s ease; }
+  .dbtn:active, .dbtn.active { background: rgba(85, 220, 255, 0.95); color: var(--bg); transform: scale(0.92); box-shadow: 0 2px 5px rgba(0,0,0,0.5); border-color: white; }
+  .up { grid-column: 2; grid-row: 1; border-radius: 16px 16px 8px 8px; } 
+  .left { grid-column: 1; grid-row: 2; border-radius: 16px 8px 8px 16px; } 
+  .right { grid-column: 3; grid-row: 2; border-radius: 8px 16px 16px 8px; } 
+  .down { grid-column: 2; grid-row: 3; border-radius: 8px 8px 16px 16px; }
   
   .top-bar { position: absolute; top: 10px; right: 10px; z-index: 100; display: flex; gap: 10px; }
   .menu-actions { display: flex; gap: 10px; margin-top: 12px; }
@@ -70,7 +76,6 @@
   @media (max-aspect-ratio: 1/1) {
     .options { grid-template-columns: 1fr; }
     #game-wrapper { flex-direction: column; }
-    .dpad { grid-template-columns: repeat(3, 45px); grid-template-rows: repeat(3, 45px); }
   }
 </style>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js" type="text/javascript"></script>
@@ -84,7 +89,7 @@
    <button class="icon-btn" id="btn-pause" aria-label="Jeda">⏸</button> <button class="icon-btn" id="btn-settings" aria-label="Pengaturan">⚙</button> <button class="icon-btn" id="btn-fs" aria-label="Layar penuh">⛶</button>
   </div>
   <div id="screen-settings" class="screen" aria-label="Pengaturan permainan">
-   <h2 data-template-id="settings-title" class="canva-text" style="color: rgb(255, 202, 58); font-weight: 400; font-style: normal; font-size: 24px;">PENGATURAN</h2><button data-template-id="settings-sound-btn" id="btn-sound" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255);">🔊 SUARA: ON</button> <button data-template-id="settings-fullscreen-btn" id="btn-settings-fs" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">⛶ LAYAR PENUH</button> <button data-template-id="settings-save-btn" id="btn-settings-save" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">SIMPAN</button> <button data-template-id="settings-close-btn" id="btn-settings-close" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">TUTUP</button>
+   <h2 data-template-id="settings-title" class="canva-text" style="color: rgb(255, 202, 58); font-weight: 400; font-style: normal; font-size: 24px;">PENGATURAN</h2><button data-template-id="settings-sound-btn" id="btn-sound" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255);">🔊 SUARA: ON</button> <button data-template-id="settings-fullscreen-btn" id="btn-settings-fs" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">⛶ LAYAR PENUH</button> <button data-template-id="settings-controls-btn" id="btn-settings-controls" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">🎮 KONTROL: AUTO</button> <button data-template-id="settings-save-btn" id="btn-settings-save" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">SIMPAN</button> <button data-template-id="settings-close-btn" id="btn-settings-close" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">TUTUP</button>
   </div>
   <div id="screen-splash" class="screen active"><img data-template-id="splash-logo" class="canva-image" loading="lazy" style="width:min(30vw, 170px); height:auto; max-height:14%; object-fit:contain; margin-bottom:clamp(2px, 0.6vw, 8px);" src="https://imgur.com/daVtIGx.png" alt="Logo Yayasan Pesantren Islam Al Azhar"><img data-template-id="splash-banner" class="canva-image" loading="lazy" style="width:min(90vw, 980px); height:auto; max-height:42%; object-fit:contain; margin-bottom:clamp(2px, 0.6vw, 8px);" src="https://imgur.com/2SBXqWV.png" alt="Ilustrasi labirin bertema sistem pernapasan dengan paru-paru, oksigen, dan karakter edukatif">
    <p data-template-id="splash-desc" class="canva-text" style="color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 22px;">Jelajahi Labirin dan Kuasai Sistem Pernapasan Manusia!</p><button data-template-id="splash-btn" class="canva-button" onclick="showMenu()" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 28px;">▶ MULAI BERMAIN</button> <button data-template-id="splash-music-btn" id="btn-splash-music" class="canva-button" type="button" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">🔊 MUSIK: ON</button>
@@ -124,9 +129,18 @@ Duel: P1 (WASD), P2 (Panah)</p><button data-template-id="tutorial-btn" class="ca
    <div id="go-stats" style="margin-bottom:20px; font-size:1.2rem; text-align:left; background:rgba(0,0,0,0.5); padding:20px; border-radius:10px;"></div><button data-template-id="go-retry-btn" class="canva-button" onclick="startGame(currentMode)" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">↻ COBA LAGI</button> <button data-template-id="go-menu-btn" class="canva-button" onclick="showMenu()" style="background: rgb(58, 80, 107); color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 16px;">🏠 MENU UTAMA</button>
   </div>
   <div id="game-wrapper"></div>
+  
   <div id="controls">
-   <div class="dpad" id="dpad1"></div>
+   <div class="dpad-container" id="dpad1-container">
+     <div class="dpad-label">P1</div>
+     <div class="dpad" id="dpad1"></div>
+   </div>
+   <div class="dpad-container" id="dpad2-container" style="display:none;">
+     <div class="dpad-label">P2</div>
+     <div class="dpad" id="dpad2"></div>
+   </div>
   </div>
+
   <script>
 const CONFIG = {
   tileSize: 40, fps: 60,
@@ -235,7 +249,6 @@ class Entity {
     this.dir = { x: 0, y: 0 }; this.nextDir = { x: 0, y: 0 };
   }
   updatePos(map) {
-    // Snap at tile centers with a tolerance so fractional speeds stay responsive.
     const nearTile = (value) => Math.abs(value - Math.round(value / this.size) * this.size) <= Math.min(1, this.speed * 0.5);
     if(nearTile(this.x) && nearTile(this.y)) {
       this.x = Math.round(this.x / this.size) * this.size;
@@ -311,8 +324,6 @@ class Enemy extends Entity {
   }
   updateAI(map, targetC, targetR, isFleeing) {
     this.speed = (isFleeing ? CONFIG.fleeSpeed : CONFIG.enemySpeed) * speedMultiplier;
-    // Slow/fast modes can use fractional speeds, so use a tolerance and snap
-    // to the tile center before choosing a new corridor.
     const nearTile = (value) => Math.abs(value - Math.round(value / this.size) * this.size) <= Math.min(1, this.speed * 0.5);
     if(nearTile(this.x) && nearTile(this.y)) {
       this.x = Math.round(this.x / this.size) * this.size;
@@ -528,6 +539,7 @@ class PlayerGame {
 }
 
 let players = []; let currentMode = 1; let animFrame; let globalPaused = false;
+let forceControls = 'AUTO'; // Setelan awal visibilitas kontrol d-pad
 
 function initAudioContext() { Audio.init(); if(document.getElementById('screen-splash')?.classList.contains('active')) Audio.startMenuMusic(); document.removeEventListener('click', initAudioContext); document.removeEventListener('keydown', initAudioContext); document.removeEventListener('touchstart', initAudioContext); }
 document.addEventListener('click', initAudioContext); document.addEventListener('keydown', initAudioContext); document.addEventListener('touchstart', initAudioContext);
@@ -571,14 +583,34 @@ document.getElementById('player-names-form').addEventListener('submit', (event) 
 });
 document.getElementById('names-back-btn').addEventListener('click', showMenu);
 
+function updateControlsVisibility() {
+  const wrapper = document.getElementById('controls');
+  if(!wrapper) return;
+  const isTouch = ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  
+  if (forceControls === 'ON' || (forceControls === 'AUTO' && isTouch)) {
+    wrapper.style.display = 'flex';
+    document.getElementById('dpad1-container').style.display = 'flex';
+    if (currentMode === 2) {
+      document.getElementById('dpad2-container').style.display = 'flex';
+      wrapper.style.justifyContent = 'space-between';
+    } else {
+      document.getElementById('dpad2-container').style.display = 'none';
+      wrapper.style.justifyContent = 'center';
+    }
+  } else {
+    wrapper.style.display = 'none';
+  }
+}
+
 function startGame(numPlayers) {
   Audio.init(); Audio.stopMenuMusic(); currentMode = numPlayers;
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   let wrapper = document.getElementById('game-wrapper'); wrapper.innerHTML = ''; players = [];
   for(let i=1; i<=numPlayers; i++) { players.push(new PlayerGame(i)); }
-  if(numPlayers === 1 && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
-    document.getElementById('controls').style.display = 'flex';
-  } else { document.getElementById('controls').style.display = 'none'; }
+  
+  updateControlsVisibility();
+  
   globalPaused = false; lastTime = performance.now(); gameLoop(lastTime);
 }
 
@@ -635,23 +667,35 @@ window.addEventListener('keydown', (e) => {
 });
 window.addEventListener('keyup', (e) => { keys[e.key] = false; });
 
-const setupDPad = () => {
-  const dpad = document.getElementById('dpad1');
+const setupDPad = (id, playerIndex) => {
+  const dpad = document.getElementById(id);
+  if(!dpad) return;
+  dpad.innerHTML = '';
   const dirs = [{c:'up', d:{x:0,y:-1}, t:'▲'}, {c:'left', d:{x:-1,y:0}, t:'◀'}, {c:'right', d:{x:1,y:0}, t:'▶'}, {c:'down', d:{x:0,y:1}, t:'▼'}];
   dirs.forEach(dir => {
     let btn = document.createElement('div');
     btn.className = `dbtn ${dir.c}`; btn.textContent = dir.t;
-    const trigger = (e) => { e.preventDefault(); if(players[0] && !players[0].isPaused) players[0].player.nextDir = dir.d; };
-    btn.addEventListener('touchstart', trigger); btn.addEventListener('mousedown', trigger);
+    const trigger = (e) => { 
+      e.preventDefault(); 
+      if(players[playerIndex] && !players[playerIndex].isPaused) {
+        players[playerIndex].player.nextDir = dir.d;
+        btn.classList.add('active');
+        setTimeout(() => btn.classList.remove('active'), 150);
+      }
+    };
+    btn.addEventListener('touchstart', trigger, {passive: false}); 
+    btn.addEventListener('mousedown', trigger);
     dpad.appendChild(btn);
   });
 };
-setupDPad();
+
+setupDPad('dpad1', 0);
+setupDPad('dpad2', 1);
 
 let touchStartX = 0; let touchStartY = 0;
 document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; touchStartY = e.changedTouches[0].screenY; }, {passive:false});
 document.addEventListener('touchend', e => {
-  if(e.target.closest('button') || e.target.closest('.dpad')) return;
+  if(e.target.closest('button') || e.target.closest('.dpad') || e.target.closest('.dpad-container')) return;
   let tx = e.changedTouches[0].screenX, ty = e.changedTouches[0].screenY;
   let dx = tx - touchStartX, dy = ty - touchStartY;
   if(Math.abs(dx) > 30 || Math.abs(dy) > 30) {
@@ -670,6 +714,7 @@ function toggleFullscreen() {
 document.getElementById('btn-fs').addEventListener('click', toggleFullscreen);
 document.getElementById('btn-menu-fs').addEventListener('click', toggleFullscreen);
 document.getElementById('btn-settings-fs').addEventListener('click', toggleFullscreen);
+
 let settingsReturnScreen = 'screen-menu';
 const openSettings = () => {
   const activeScreen = document.querySelector('.screen.active');
@@ -679,14 +724,23 @@ const openSettings = () => {
 };
 document.getElementById('btn-settings').addEventListener('click', openSettings);
 document.querySelector('[data-template-id="menu-settings-btn"]').addEventListener('click', openSettings);
+
 const closeSettings = () => {
   document.getElementById('screen-settings').classList.remove('active');
   document.getElementById(settingsReturnScreen)?.classList.add('active');
 };
 document.getElementById('btn-settings-close').addEventListener('click', closeSettings);
 document.getElementById('btn-settings-save').addEventListener('click', closeSettings);
+
+document.getElementById('btn-settings-controls').addEventListener('click', (e) => {
+  if (forceControls === 'AUTO') forceControls = 'ON';
+  else if (forceControls === 'ON') forceControls = 'OFF';
+  else forceControls = 'AUTO';
+  e.target.textContent = `🎮 KONTROL: ${forceControls}`;
+  updateControlsVisibility();
+});
+
 const toggleSound = (event) => {
-  // Prevent the document audio initializer from immediately restarting music.
   if(event) { event.preventDefault(); event.stopPropagation(); }
   const shouldEnable = !Audio.enabled;
   if(!shouldEnable) Audio.stopMenuMusic();
